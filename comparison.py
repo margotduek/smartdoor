@@ -5,6 +5,7 @@ import numpy as np
 import cv2
 import sys
 import os
+from PIL import Image
 
 correct_counter = 0
 
@@ -55,50 +56,83 @@ def compare_output(s):
     print correct_counter
 
 
+def each_owner():
+    # load the images -- the original, the original + contrast,
+    # and the original + photoshop
+    for fn in os.listdir('./images/new/'):
+        if fn[-3:] == 'jpg':
+            num_pics = 0
+            for old_photo in os.listdir('./images/margot/'):
+                if old_photo[-3:] == 'jpg':
+                    original = cv2.imread("images/margot/" + old_photo)
+                    new = cv2.imread("images/new/" + fn)
+                    # loop over the images
 
-# load the images -- the original, the original + contrast,
-# and the original + photoshop
-original = cv2.imread("images/margot1.jpg")
-contrast = cv2.imread("images/saul2.jpg")
-shopped = cv2.imread("images/jesse2.jpg")
+                    # convert the images to grayscale
+                    original = cv2.cvtColor(original, cv2.COLOR_BGR2GRAY)
+                    new = cv2.cvtColor(new, cv2.COLOR_BGR2GRAY)
 
-# convert the images to grayscale
-original = cv2.cvtColor(original, cv2.COLOR_BGR2GRAY)
-contrast = cv2.cvtColor(contrast, cv2.COLOR_BGR2GRAY)
-shopped = cv2.cvtColor(shopped, cv2.COLOR_BGR2GRAY)
+                    # initialize the figure
+                    fig = plt.figure("Images")
+                    images = ("Original", original), ("Contrast", contrast)
+                    num_pics += 1
 
-# initialize the figure
-fig = plt.figure("Images")
-images = ("Original", original), ("Contrast", contrast), ("Photoshopped", shopped)
+                    compare_images(original, new, "Original vs. New")
+            if float(correct_counter / num_pics) > .5:
+                return "Margot"
 
 
-# loop over the images
-for (i, (name, image)) in enumerate(images):
-	# show the image
-	ax = fig.add_subplot(1, 3, i + 1)
-	ax.set_title(name)
-	plt.imshow(image, cmap = plt.cm.gray)
-	plt.axis("off")
+    # load the images -- the original, the original + contrast,
+    # and the original + photoshop
+    for fn in os.listdir('./images/new/'):
+        if fn[-3:] == 'jpg':
+            num_pics = 0
+            for old_photo in os.listdir('./images/saul/'):
+                if old_photo[-3:] == 'jpg':
+                    original = cv2.imread("images/saul/" + old_photo)
+                    new = cv2.imread("images/new/" + fn)
+                    # loop over the images
+
+                    # convert the images to grayscale
+                    original = cv2.cvtColor(original, cv2.COLOR_BGR2GRAY)
+                    new = cv2.cvtColor(new, cv2.COLOR_BGR2GRAY)
+
+                    # initialize the figure
+                    fig = plt.figure("Images")
+                    images = ("Original", original), ("Contrast", contrast)
+                    num_pics += 1
+
+                    compare_images(original, new, "Original vs. New")
+            if float(correct_counter / num_pics) > .5:
+                return "Saul"
+
+    # load the images -- the original, the original + contrast,
+    # and the original + photoshop
+    for fn in os.listdir('./images/new/'):
+        if fn[-3:] == 'jpg':
+            num_pics = 0
+            for old_photo in os.listdir('./images/jesse/'):
+                if old_photo[-3:] == 'jpg':
+                    original = cv2.imread("images/jesse/" + old_photo)
+                    new = cv2.imread("images/new/" + fn)
+                    # loop over the images
+
+                    # convert the images to grayscale
+                    original = cv2.cvtColor(original, cv2.COLOR_BGR2GRAY)
+                    new = cv2.cvtColor(new, cv2.COLOR_BGR2GRAY)
+
+                    # initialize the figure
+                    fig = plt.figure("Images")
+                    images = ("Original", original), ("Contrast", contrast)
+                    num_pics += 1
+
+                    compare_images(original, new, "Original vs. New")
+            if float(correct_counter / num_pics) > .5:
+                return "Jesse"
+
+
+
+
 
 # show the figure
-plt.show()
-
-# compare the images
-compare_images(original, original, "Original vs. Original")
-compare_images(original, contrast, "Original vs. Contrast")
-compare_images(original, shopped, "Original vs. Photoshopped")
-
-
-#def many_pictures():
-#    for filename in os.listdir(images):
-#        if filename.endswith(".jpg") or filename.endswith(".png"):
-#            print(os.path.join(images, filename))
-#            continue
-#        else:
-#            continue
-
-
-
-
-
-#many_pictures()
+#plt.show()

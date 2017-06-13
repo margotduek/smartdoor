@@ -25,7 +25,7 @@ def crop_photo():
         for (x, y, w, h) in faces:
             cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
             sub_face = frame[y:y+h, x:x+w]
-            file_name = "face_pic_" + str(num_pics) + ".jpg"
+            file_name = "./images/new/face_pic_" + str(num_pics) + ".jpg"
             cv2.imwrite(file_name, sub_face)
             num_pics += 1
 
@@ -39,4 +39,3 @@ def crop_photo():
     video_capture.release()
     cv2.destroyAllWindows()
 
-crop_photo()
