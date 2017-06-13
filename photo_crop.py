@@ -38,3 +38,5 @@ def crop_photo():
     # When everything is done, release the capture
     video_capture.release()
     cv2.destroyAllWindows()
+
+crop_photo()
