@@ -5,6 +5,7 @@ import numpy as np
 import cv2
 import sys
 import os
+from PIL import Image
 
 correct_counter = 0
 
@@ -85,17 +86,13 @@ plt.show()
 
 # compare the images
 compare_images(original, original, "Original vs. Original")
-compare_images(original, contrast, "Original vs. Contrast")
+# compare_images(original, contrast, "Original vs. Contrast")
 compare_images(original, shopped, "Original vs. Photoshopped")
 
 
-#def many_pictures():
-#    for filename in os.listdir(images):
-#        if filename.endswith(".jpg") or filename.endswith(".png"):
-#            print(os.path.join(images, filename))
-#            continue
-#        else:
-#            continue
+for fn in os.listdir('.'):
+     if fn[-3:] == 'jpg':
+        print (fn)
 
 
 
