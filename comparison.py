@@ -59,40 +59,33 @@ def compare_output(s):
 
 # load the images -- the original, the original + contrast,
 # and the original + photoshop
-original = cv2.imread("images/margot1.jpg")
-contrast = cv2.imread("images/saul2.jpg")
-shopped = cv2.imread("images/jesse2.jpg")
+for fn in os.listdir('./images/new/'):
+    if fn[-3:] == 'jpg':
+        for old_photo in os.listdir('./images/margot/'):
+            if old_photo[-3:] == 'jpg':
+                original = cv2.imread("images/margot/" + old_photo)
+                new = cv2.imread("images/new/" + fn)
+                # loop over the images
+                for (i, (name, image)) in enumerate(images):
+                    # show the image
+                    ax = fig.add_subplot(1, 3, i + 1)
+                    ax.set_title(name)
+                    plt.imshow(image, cmap = plt.cm.gray)
+                    plt.axis("off")
 
-# convert the images to grayscale
-original = cv2.cvtColor(original, cv2.COLOR_BGR2GRAY)
-contrast = cv2.cvtColor(contrast, cv2.COLOR_BGR2GRAY)
-shopped = cv2.cvtColor(shopped, cv2.COLOR_BGR2GRAY)
+                # convert the images to grayscale
+                original = cv2.cvtColor(original, cv2.COLOR_BGR2GRAY)
+                new = cv2.cvtColor(new, cv2.COLOR_BGR2GRAY)
 
-# initialize the figure
-fig = plt.figure("Images")
-images = ("Original", original), ("Contrast", contrast), ("Photoshopped", shopped)
+                # initialize the figure
+                fig = plt.figure("Images")
+                images = ("Original", original), ("Contrast", contrast)
+
+                compare_images(original, new, "Original vs. New")
 
 
-# loop over the images
-for (i, (name, image)) in enumerate(images):
-	# show the image
-	ax = fig.add_subplot(1, 3, i + 1)
-	ax.set_title(name)
-	plt.imshow(image, cmap = plt.cm.gray)
-	plt.axis("off")
+
+
 
 # show the figure
 plt.show()
-
-# compare the images
-compare_images(original, original, "Original vs. Original")
-# compare_images(original, contrast, "Original vs. Contrast")
-compare_images(original, shopped, "Original vs. Photoshopped")
-
-
-for fn in os.listdir('.'):
-     if fn[-3:] == 'jpg':
-        print (fn)
-
-
-
