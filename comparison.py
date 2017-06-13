@@ -56,20 +56,25 @@ def compare_output(s):
 
 
 
-# load the images -- the original, the original + contrast,
-# and the original + photoshop
-original = cv2.imread("images/margot1.jpg")
-contrast = cv2.imread("images/saul2.jpg")
-shopped = cv2.imread("images/jesse2.jpg")
+# load the images -- the zero, the zero + one,
+# and the zero + photoshop
+zero = cv2.imread("images/margot1.jpg")
+one = cv2.imread("images/margot2.jpg")
+two = cv2.imread("images/jesse2.jpg")
 
 # convert the images to grayscale
-original = cv2.cvtColor(original, cv2.COLOR_BGR2GRAY)
-contrast = cv2.cvtColor(contrast, cv2.COLOR_BGR2GRAY)
-shopped = cv2.cvtColor(shopped, cv2.COLOR_BGR2GRAY)
+zero = cv2.cvtColor(zero, cv2.COLOR_BGR2GRAY)
+one = cv2.cvtColor(one, cv2.COLOR_BGR2GRAY)
+two = cv2.cvtColor(two, cv2.COLOR_BGR2GRAY)
+three = cv2.cvtColor(three, cv2.COLOR_BGR2GRAY)
+four = cv2.cvtColor(four, cv2.COLOR_BGR2GRAY)
+five = cv2.cvtColor(five, cv2.COLOR_BGR2GRAY)
+six = cv2.cvtColor(six, cv2.COLOR_BGR2GRAY)
+seven = cv2.cvtColor(seven, cv2.COLOR_BGR2GRAY)
 
 # initialize the figure
 fig = plt.figure("Images")
-images = ("Original", original), ("Contrast", contrast), ("Photoshopped", shopped)
+images = ("zero", zero), ("first", one), ("second", two), ("third", three), ("fouth", four), ("five", five), ("six", six), ("seven", seven),
 
 
 # loop over the images
@@ -84,9 +89,9 @@ for (i, (name, image)) in enumerate(images):
 plt.show()
 
 # compare the images
-compare_images(original, original, "Original vs. Original")
-compare_images(original, contrast, "Original vs. Contrast")
-compare_images(original, shopped, "Original vs. Photoshopped")
+compare_images(zero, zero, "Original vs. Original")
+compare_images(zero, one, "Original vs. Contrast")
+compare_images(zero, two, "Original vs. Phototwo")
 
 
 #def many_pictures():
