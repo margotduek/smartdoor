@@ -96,6 +96,3 @@ for fn in os.listdir('.'):
 
 
 
-
-
-#many_pictures()
