@@ -56,36 +56,83 @@ def compare_output(s):
     print correct_counter
 
 
+def each_owner():
+    # load the images -- the original, the original + contrast,
+    # and the original + photoshop
+    for fn in os.listdir('./images/new/'):
+        if fn[-3:] == 'jpg':
+            num_pics = 0
+            for old_photo in os.listdir('./images/margot/'):
+                if old_photo[-3:] == 'jpg':
+                    original = cv2.imread("images/margot/" + old_photo)
+                    new = cv2.imread("images/new/" + fn)
+                    # loop over the images
 
-# load the images -- the original, the original + contrast,
-# and the original + photoshop
-for fn in os.listdir('./images/new/'):
-    if fn[-3:] == 'jpg':
-        for old_photo in os.listdir('./images/margot/'):
-            if old_photo[-3:] == 'jpg':
-                original = cv2.imread("images/margot/" + old_photo)
-                new = cv2.imread("images/new/" + fn)
-                # loop over the images
-                for (i, (name, image)) in enumerate(images):
-                    # show the image
-                    ax = fig.add_subplot(1, 3, i + 1)
-                    ax.set_title(name)
-                    plt.imshow(image, cmap = plt.cm.gray)
-                    plt.axis("off")
+                    # convert the images to grayscale
+                    original = cv2.cvtColor(original, cv2.COLOR_BGR2GRAY)
+                    new = cv2.cvtColor(new, cv2.COLOR_BGR2GRAY)
 
-                # convert the images to grayscale
-                original = cv2.cvtColor(original, cv2.COLOR_BGR2GRAY)
-                new = cv2.cvtColor(new, cv2.COLOR_BGR2GRAY)
+                    # initialize the figure
+                    fig = plt.figure("Images")
+                    images = ("Original", original), ("Contrast", contrast)
+                    num_pics += 1
 
-                # initialize the figure
-                fig = plt.figure("Images")
-                images = ("Original", original), ("Contrast", contrast)
+                    compare_images(original, new, "Original vs. New")
+            if float(correct_counter / num_pics) > .5:
+                return "Margot"
 
-                compare_images(original, new, "Original vs. New")
+
+    # load the images -- the original, the original + contrast,
+    # and the original + photoshop
+    for fn in os.listdir('./images/new/'):
+        if fn[-3:] == 'jpg':
+            num_pics = 0
+            for old_photo in os.listdir('./images/saul/'):
+                if old_photo[-3:] == 'jpg':
+                    original = cv2.imread("images/saul/" + old_photo)
+                    new = cv2.imread("images/new/" + fn)
+                    # loop over the images
+
+                    # convert the images to grayscale
+                    original = cv2.cvtColor(original, cv2.COLOR_BGR2GRAY)
+                    new = cv2.cvtColor(new, cv2.COLOR_BGR2GRAY)
+
+                    # initialize the figure
+                    fig = plt.figure("Images")
+                    images = ("Original", original), ("Contrast", contrast)
+                    num_pics += 1
+
+                    compare_images(original, new, "Original vs. New")
+            if float(correct_counter / num_pics) > .5:
+                return "Saul"
+
+    # load the images -- the original, the original + contrast,
+    # and the original + photoshop
+    for fn in os.listdir('./images/new/'):
+        if fn[-3:] == 'jpg':
+            num_pics = 0
+            for old_photo in os.listdir('./images/jesse/'):
+                if old_photo[-3:] == 'jpg':
+                    original = cv2.imread("images/jesse/" + old_photo)
+                    new = cv2.imread("images/new/" + fn)
+                    # loop over the images
+
+                    # convert the images to grayscale
+                    original = cv2.cvtColor(original, cv2.COLOR_BGR2GRAY)
+                    new = cv2.cvtColor(new, cv2.COLOR_BGR2GRAY)
+
+                    # initialize the figure
+                    fig = plt.figure("Images")
+                    images = ("Original", original), ("Contrast", contrast)
+                    num_pics += 1
+
+                    compare_images(original, new, "Original vs. New")
+            if float(correct_counter / num_pics) > .5:
+                return "Jesse"
 
 
 
 
 
 # show the figure
-plt.show()
+#plt.show()
