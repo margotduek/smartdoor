@@ -103,11 +103,11 @@ def face_recognizer():
         # Show the image and check for ESC being pressed
         cv2.imshow('OpenCV', frame)
         key = cv2.waitKey(10)
-        if saul == 30:
+        if saul == 15:
             return 'Saul'
-        elif margot == 30:
+        elif margot == 15:
             return 'Margot'
-        elif unknown == 30:
+        elif unknown == 15:
             return 'unknown'
         if key == 27:
             break
