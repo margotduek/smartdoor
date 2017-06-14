@@ -5,10 +5,12 @@ import numpy as np
 import cv2
 import sys
 import os
+import pdb
 from PIL import Image
 
 correct_counter = 0
 
+pdb.set_trace()
 
 def mse(imageA, imageB):
 	# the 'Mean Squared Error' between the two images is the

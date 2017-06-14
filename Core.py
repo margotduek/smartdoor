@@ -1,15 +1,8 @@
 from __future__ import unicode_literals
-from gtts import gTTS
 import recieve_sms
 from twilio.rest import Client
 import os
-import json
 
-#import pyttsx
-#engine = pyttsx.init()  #initiliazing pyttsx
-#engine.say('hello world.')  # add all the text you want to convert to speech
-#engine.say('How are you.')
-#engine.runAndWait()  #start converting.this will automatically play the speech the response
 
 owners = []
 authorizedUsers = []
@@ -64,12 +57,14 @@ def unauthorizedUserAtDoor():
         toNumber = owner["phone number"]
         text = "Hi " + owner['name']
         body = text + ". " + getKnockerName() + " is at your door. Do you want to let them in? Respond 'Yes' or 'No'"
+        image = [getKnockerImage()]
+        print image[0]
         message = client.api.account.messages.create(to=toNumber,
                                              from_="+14159935014",
                                              body=body,
-                                             media_url = [getKnockerImage()])
+                                             media_url = getKnockerImage())
         print 'sent message "' + body + '"'
-    letIn = recieve_sms.sms()
+    letIn = recieve_sms.app.run()
     if letIn:
         Enter(AuthorizedUser(getKnockerName(), False, None))
     else:
@@ -79,19 +74,19 @@ def unauthorizedUserAtDoor():
 MY_HOST_URL = "109.11.212.22"
 
 def getKnockerImage():
-    
-    return "https://github.com/margotduek/smartdoor/raw/unstable/saul_pic.JPG"
+    return "https://pbs.twimg.com/profile_images/453173279637766144/-zpwMHaG.jpeg"
 
 def getKnockerName():
     return 'Saul'
 
 
-jesse = AuthorizedUser('Jesse', True, "+972534264710")
+jesse = AuthorizedUser('Jesse', True, "+19105089100")
 jesse.addPref(Preference("TV", "Channel 4"))
 jesse.addPref(Preference("Air Conditioning", "Off"))
 jesse.addPref(Preference("Stereo", "Play Funk"))
 authorizedUsers.append(jesse)
 
 Enter(jesse)
-#unauthorizedUserAtDoor()
+print "unauthorized at door"
+unauthorizedUserAtDoor()
 
