@@ -92,7 +92,7 @@ def face_recognizer():
                 cv2.putText(frame,
                    '%s' % (names[prediction[0]]),
                    (x-10, y-10), cv2.FONT_HERSHEY_PLAIN,1,(0, 255, 0))
-                if names[prediction[0]] == 'saul':
+                if names[prediction[0]] == 'saul' or names[prediction[0]] == 'saul1':
                     saul += 1
                 else:
                     margot += 1
@@ -103,11 +103,11 @@ def face_recognizer():
         # Show the image and check for ESC being pressed
         cv2.imshow('OpenCV', frame)
         key = cv2.waitKey(10)
-        if saul == 30:
+        if saul == 15:
             return 'Saul'
-        elif margot == 30:
+        elif margot == 15:
             return 'Margot'
-        elif unknown == 30:
+        elif unknown == 15:
             return 'unknown'
         if key == 27:
             break
