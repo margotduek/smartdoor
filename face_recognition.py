@@ -92,7 +92,7 @@ def face_recognizer():
                 cv2.putText(frame,
                    '%s' % (names[prediction[0]]),
                    (x-10, y-10), cv2.FONT_HERSHEY_PLAIN,1,(0, 255, 0))
-                if names[prediction[0]] == 'saul':
+                if names[prediction[0]] == 'saul' or names[prediction[0]] == 'saul1':
                     saul += 1
                 else:
                     margot += 1
