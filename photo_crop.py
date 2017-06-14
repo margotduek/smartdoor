@@ -25,7 +25,7 @@ def crop_photo():
         for (x, y, w, h) in faces:
             cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
             sub_face = frame[y:y+h, x:x+w]
-            file_name = "./new/face_pic_34" + str(num_pics) + "_saul1.jpg"
+            file_name = "./new/face_pic_2" + str(num_pics) + "_saul1.jpg"
             sub_face = cv2.resize(sub_face, (273, 273))
             cv2.imwrite(file_name, sub_face)
             num_pics += 1
