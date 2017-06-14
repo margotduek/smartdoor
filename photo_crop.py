@@ -17,8 +17,9 @@ def crop_photo():
             gray,
             scaleFactor=1.5,
             minNeighbors=5,
-            minSize=(30, 30),
-            flags=cv2.cv.CV_HAAR_SCALE_IMAGE
+            minSize=(273, 273),
+            maxSize=(273, 273),
+            flags=cv2.COLOR_BGR2GRAY
         )
 
         # Draw a rectangle around the faces
@@ -28,14 +29,14 @@ def crop_photo():
             file_name = "./images/new/face_pic_" + str(num_pics) + ".jpg"
             cv2.imwrite(file_name, sub_face)
             num_pics += 1
-
+            time.sleep(.25)
         # Display the resulting frame
-        cv2.imshow('Video', frame)
+        # cv2.imshow('Video', frame)
 
         if num_pics >= 8:
             break
 
     # When everything is done, release the capture
     video_capture.release()
-    cv2.destroyAllWindows()
+    # cv2.destroyAllWindows()
 crop_photo()

@@ -29,36 +29,60 @@ def compare_images(imageA, imageB, title):
 
 
     # setup the figure
-    fig = plt.figure(title)
-    plt.suptitle("MSE: %.2f, SSIM: %.2f" % (m, s))
+    # fig = plt.figure(title)
+    # plt.suptitle("MSE: %.2f, SSIM: %.2f" % (m, s))
 
     # show first image
-    ax = fig.add_subplot(1, 2, 1)
-    plt.imshow(imageA, cmap = plt.cm.gray)
-    plt.axis("off")
+    # ax = fig.add_subplot(1, 2, 1)
+    # plt.imshow(imageA, cmap = plt.cm.gray)
+    # plt.axis("off")
 
     # show the second image
-    ax = fig.add_subplot(1, 2, 2)
-    plt.imshow(imageB, cmap = plt.cm.gray)
-    plt.axis("off")
+    # ax = fig.add_subplot(1, 2, 2)
+    # plt.imshow(imageB, cmap = plt.cm.gray)
+    # plt.axis("off")
 
     compare_output(s)
 
     # show the images
-    plt.show()
+    # plt.show()
 
 
 def compare_output(s):
     global correct_counter
-    if(s > .40):
-        sys.stdout.write("same person | ")
+    if(s > .45):
         correct_counter = correct_counter + 1
-    print correct_counter
 
 
 def each_owner():
     # load the images -- the original, the original + contrast,
     # and the original + photoshop
+    max_accuracy = 0
+    name = ''
+    for fn in os.listdir('./images/new/'):
+        if fn[-3:] == 'jpg':
+            num_pics = 0
+            for old_photo in os.listdir('./images/jesse/'):
+                if old_photo[-3:] == 'jpg':
+                    original = cv2.imread("images/jesse/" + old_photo)
+                    new = cv2.imread("images/new/" + fn)
+                    # loop over the images
+
+                    # convert the images to grayscale
+                    original = cv2.cvtColor(original, cv2.COLOR_BGR2GRAY)
+                    new = cv2.cvtColor(new, cv2.COLOR_BGR2GRAY)
+
+                    # initialize the figure
+                    fig = plt.figure("Images")
+                    images = ("Original", original), ("New", new)
+                    num_pics += 1
+
+                    compare_images(original, new, "Original vs. New")
+            if float(correct_counter / num_pics) > .5:
+                if float(correct_counter / num_pics) > max_accuracy:
+                    max_accuracy = float(correct_counter / num_pics)
+                    name = "Jesse"
+
     for fn in os.listdir('./images/new/'):
         if fn[-3:] == 'jpg':
             num_pics = 0
@@ -74,12 +98,14 @@ def each_owner():
 
                     # initialize the figure
                     fig = plt.figure("Images")
-                    images = ("Original", original), ("Contrast", contrast)
+                    images = ("Original", original), ("New", new)
                     num_pics += 1
 
                     compare_images(original, new, "Original vs. New")
             if float(correct_counter / num_pics) > .5:
-                return "Margot"
+                if float(correct_counter / num_pics) > max_accuracy:
+                    max_accuracy = float(correct_counter / num_pics)
+                    name = "Margot"
 
 
     # load the images -- the original, the original + contrast,
@@ -99,41 +125,22 @@ def each_owner():
 
                     # initialize the figure
                     fig = plt.figure("Images")
-                    images = ("Original", original), ("Contrast", contrast)
+                    images = ("Original", original), ("New", new)
                     num_pics += 1
 
                     compare_images(original, new, "Original vs. New")
             if float(correct_counter / num_pics) > .5:
-                return "Saul"
+                if float(correct_counter / num_pics) > max_accuracy:
+                    max_accuracy = float(correct_counter / num_pics)
+                    name = "Saul"
 
     # load the images -- the original, the original + contrast,
     # and the original + photoshop
-    for fn in os.listdir('./images/new/'):
-        if fn[-3:] == 'jpg':
-            num_pics = 0
-            for old_photo in os.listdir('./images/jesse/'):
-                if old_photo[-3:] == 'jpg':
-                    original = cv2.imread("images/jesse/" + old_photo)
-                    new = cv2.imread("images/new/" + fn)
-                    # loop over the images
-
-                    # convert the images to grayscale
-                    original = cv2.cvtColor(original, cv2.COLOR_BGR2GRAY)
-                    new = cv2.cvtColor(new, cv2.COLOR_BGR2GRAY)
-
-                    # initialize the figure
-                    fig = plt.figure("Images")
-                    images = ("Original", original), ("Contrast", contrast)
-                    num_pics += 1
-
-                    compare_images(original, new, "Original vs. New")
-            if float(correct_counter / num_pics) > .5:
-                return "Jesse"
-    return None
+	return name
 
 
 
 
-
+print each_owner()
 # show the figure
 #plt.show()
