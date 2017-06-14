@@ -17,8 +17,7 @@ def crop_photo():
             gray,
             scaleFactor=1.5,
             minNeighbors=5,
-            minSize=(273, 273),
-            maxSize=(273, 273),
+            minSize=(30, 30),
             flags=cv2.COLOR_BGR2GRAY
         )
 
@@ -26,14 +25,15 @@ def crop_photo():
         for (x, y, w, h) in faces:
             cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
             sub_face = frame[y:y+h, x:x+w]
-            file_name = "./images/new/face_pic_" + str(num_pics) + ".jpg"
+            file_name = "./new/face_pic_34" + str(num_pics) + "_saul1.jpg"
+            sub_face = cv2.resize(sub_face, (273, 273))
             cv2.imwrite(file_name, sub_face)
             num_pics += 1
             time.sleep(.25)
         # Display the resulting frame
         # cv2.imshow('Video', frame)
 
-        if num_pics >= 8:
+        if num_pics >= 14:
             break
 
     # When everything is done, release the capture
