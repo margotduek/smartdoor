@@ -1,4 +1,5 @@
-import cv2, sys, numpy, os
+import cv2
+import sys, numpy, os
 def face_recognizer():
     size = 1
     fn_haar = 'haarcascade_frontalface_default.xml'
@@ -43,7 +44,6 @@ def face_recognizer():
     # NOTE FOR OpenCV2: remove '.face'
     model = cv2.createFisherFaceRecognizer()
     model.train(images, lables)
-
 
 
 

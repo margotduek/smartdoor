@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 import recieve_sms
 import upload_to_google
+import face_recognition
 from twilio.rest import Client
 import os
 
@@ -56,18 +57,17 @@ def unauthorizedUserAtDoor():
     client = Client(account_sid, auth_token)
     for owner in owners:
         toNumber = owner["phone number"]
-        text = "Hi " + owner['name']
-        body = text + ". " + getKnockerName() + " is at your door. Do you want to let them in? Respond 'Yes' or 'No'"
+        text = "Hi " + owner['name'] + ". Someone is at your door. Do you want to let them in? Respond 'Yes' or 'No'"
         image = [getKnockerImage()]
         print image[0]
         message = client.api.account.messages.create(to=toNumber,
                                              from_="+14159935014",
-                                             body=body,
+                                             body=text,
                                              media_url = getKnockerImage())
         print 'sent message "' + body + '"'
     letIn = recieve_sms.run()
     if letIn:
-        Enter(AuthorizedUser(getKnockerName(), False, None))
+        Enter(AuthorizedUser("Unknown", False, None))
     else:
         Deny()
 
@@ -79,16 +79,27 @@ def getKnockerImage():
     return "https://storage.googleapis.com/images-smartdoor/face_pic_4.jpg"
 
 def getKnockerName():
+    face_recognition.face_recognizer()
     return 'Jesse'
 
 
-jesse = AuthorizedUser('Jesse', True, "+19105089100")
-jesse.addPref(Preference("TV", "Channel 4"))
-jesse.addPref(Preference("Air Conditioning", "Off"))
-jesse.addPref(Preference("Stereo", "Play Funk"))
-authorizedUsers.append(jesse)
+margot = AuthorizedUser('Margot', True, "+19105089100")
+margot.addPref(Preference("Music", "Playing Rock and Roll... Loud"))
 
-Enter(jesse)
-print "unauthorized at door"
-unauthorizedUserAtDoor()
+saul = AuthorizedUser('Saul', False, "")
+saul.addPref(Preference("TV", "Channel 4"))
+
+authorizedUsers.append(margot)
+authorizedUsers.append(saul)
+
+while True:
+    name = getKnockerName()
+    for aUser in authorizedUsers:
+        if aUser.name == name:
+            Enter(aUser)
+            continue
+    else:
+        unauthorizedUserAtDoor()
+
+
 
