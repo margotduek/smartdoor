@@ -129,6 +129,7 @@ def each_owner():
                     compare_images(original, new, "Original vs. New")
             if float(correct_counter / num_pics) > .5:
                 return "Jesse"
+    return None
 
 
 
