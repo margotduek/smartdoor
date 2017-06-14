@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 import recieve_sms
+import upload_to_google
 from twilio.rest import Client
 import os
 
@@ -64,7 +65,7 @@ def unauthorizedUserAtDoor():
                                              body=body,
                                              media_url = getKnockerImage())
         print 'sent message "' + body + '"'
-    letIn = recieve_sms.app.run()
+    letIn = recieve_sms.run()
     if letIn:
         Enter(AuthorizedUser(getKnockerName(), False, None))
     else:
@@ -74,10 +75,11 @@ def unauthorizedUserAtDoor():
 MY_HOST_URL = "109.11.212.22"
 
 def getKnockerImage():
-    return "https://pbs.twimg.com/profile_images/453173279637766144/-zpwMHaG.jpeg"
+    upload_to_google.run()
+    return "https://storage.googleapis.com/images-smartdoor/face_pic_4.jpg"
 
 def getKnockerName():
-    return 'Saul'
+    return 'Jesse'
 
 
 jesse = AuthorizedUser('Jesse', True, "+19105089100")
